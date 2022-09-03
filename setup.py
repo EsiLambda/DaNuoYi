@@ -25,5 +25,5 @@ setup(
     exclude_package_date={'': ['.gitignore']},
     # Choose your license
     license='MIT',
-    install_requires=['opennmt-py==2.1.2', 'torchtext', 'findfile', 'autocuda', 'googledrivedownloader', 'torch', 'termcolor', 'tqdm', 'matplotlib'],
+    install_requires=['opennmt-py', 'torchtext', 'findfile', 'autocuda', 'googledrivedownloader', 'torch', 'termcolor', 'tqdm', 'matplotlib'],
 )
