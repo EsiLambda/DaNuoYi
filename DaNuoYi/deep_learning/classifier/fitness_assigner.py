@@ -25,8 +25,9 @@ class FitnessAssigner:
         state_dict_path = find_file(state_dict_dir, [classifier, 'state_dict'])  # model of best performance
         opt_path = find_file(state_dict_dir, [classifier, 'opt'])  # model of best performance
         embedding_path = find_file(state_dict_dir, 'embedding_matrix')
-
-        self.opt = pickle.load(open(opt_path, 'rb'))
+        
+        with open(opt_path, 'rb') as inp:
+            self.opt = pickle.load(inp)
         self.opt.device = torch.device(auto_cuda())
 
         dataset_files = {
