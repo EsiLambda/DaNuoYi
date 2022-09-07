@@ -9,7 +9,7 @@ import os.path
 #############################  General Config  #############################
 PROJECT_PATH = os.getcwd()
 # PROJECT_PATH = 'E:/works/injection'
-OUTPUT_PATH = 'output'  # path to save result
+OUTPUT_PATH = PROJECT_PATH  # path to save result
 REGENERATE_COUNT = 100
 RETRY_TIME = 60
 
