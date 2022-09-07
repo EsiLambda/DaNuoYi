@@ -46,7 +46,8 @@ def _load_word_vec(path, word2idx=None, embed_dim=300):
 
 def build_embedding_matrix(word2idx, embed_dim, dat_fname):
     if os.path.exists(dat_fname):
-        embedding_matrix = pickle.load(open(dat_fname, 'rb'))
+        with open(dat_fname, 'rb') as inp:
+            embedding_matrix = pickle.load(inp)
     else:
         print('loading word vectors...')
         embedding_matrix = np.zeros((len(word2idx) + 2, embed_dim))
