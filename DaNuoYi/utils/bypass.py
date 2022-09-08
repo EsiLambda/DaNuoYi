@@ -31,7 +31,7 @@ def is_bypass(individual: Individual, waf_address, return_code=False):
 
         payload = construct_user_input(individual)
 
-        if '9999' in waf_address:
+        if '5000' in waf_address:
             if task == 'sqli':
                 url_get = waf_address + r'sqli_6.php'
                 params = {"title": payload, "action": "search"}
