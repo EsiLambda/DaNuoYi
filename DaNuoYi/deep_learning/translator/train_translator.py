@@ -36,7 +36,7 @@ class InjectionTranslatorTrainer:
         cuda_index = auto_cuda_index()
 
         dataset_path = find_dir(global_config.PROJECT_PATH, ['translation_datasets', '{}2{}'.format(task1, task2)])
-        state_dict_path = os.path.join(global_config.PROJECT_PATH, 'runtime_materials/translation_datasets/{}2{}'.format(task1, task2))
+        state_dict_path = os.path.join(global_config.PROJECT_PATH, 'drive/MyDrive/Project/translation_datasets/{}2{}'.format(task1, task2))
         if not state_dict_path:
             os.makedirs(state_dict_path)
 
