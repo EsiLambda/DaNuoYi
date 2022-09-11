@@ -42,20 +42,20 @@ class InjectionTranslatorTrainer:
 
         yaml_config = """
         ## Where the vocab(s) will be written
-        src_vocab: {0}/runtime_materials/translation_datasets/{1}2{2}/vocab.src
-        tgt_vocab: {0}/runtime_materials/translation_datasets/{1}2{2}/vocab.tgt
+        src_vocab: {0}/drive/MyDrive/Project/translation_datasets/{1}2{2}/vocab.src
+        tgt_vocab: {0}/drive/MyDrive/Project/translation_datasets/{1}2{2}/vocab.tgt
         # Prevent overwriting existing files in the folder
-        save_data: {0}/runtime_materials/translation_datasets/{1}2{2}/
+        save_data: {0}/drive/MyDrive/Project/translation_datasets/{1}2{2}/
         # Corpus opts:
         data:
           corpus_1:
-            path_src: {0}/runtime_materials/translation_datasets/{1}2{2}/src-train.txt
-            path_tgt: {0}/runtime_materials/translation_datasets/{1}2{2}/tgt-train.txt
+            path_src: {0}/drive/MyDrive/Project/translation_datasets/{1}2{2}/src-train.txt
+            path_tgt: {0}/drive/MyDrive/Project/translation_datasets/{1}2{2}/tgt-train.txt
           valid:
-            path_src: {0}/runtime_materials/translation_datasets/{1}2{2}/src-val.txt
-            path_tgt: {0}/runtime_materials/translation_datasets/{1}2{2}/tgt-val.txt
+            path_src: {0}/drive/MyDrive/Project/translation_datasets/{1}2{2}/src-val.txt
+            path_tgt: {0}/drive/MyDrive/Project/translation_datasets/{1}2{2}/tgt-val.txt
         """.format(global_config.PROJECT_PATH, source_task, target_task)
-        with open('{0}/runtime_materials/translation_datasets/{1}2{2}/{1}2{2}_config.yaml'.format(
+        with open('{0}/drive/MyDrive/Project/translation_datasets/{1}2{2}/{1}2{2}_config.yaml'.format(
                       global_config.PROJECT_PATH, source_task, target_task), "w") as f:
             f.write(yaml_config)
         parser = ArgumentParser(description='build_vocab.py')
@@ -208,7 +208,7 @@ class InjectionTranslatorTrainer:
                       valid_steps=500)
 
         save_path = os.path.join(global_config.PROJECT_PATH,
-                                 'runtime_materials/translation_datasets/{}2{}'.format(source_task, target_task))
+                                 'drive/MyDrive/Project/translation_datasets/{}2{}'.format(source_task, target_task))
         if not save_path:
             os.makedirs(save_path)
 
