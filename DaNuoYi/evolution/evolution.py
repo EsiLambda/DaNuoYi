@@ -119,7 +119,7 @@ class MultiTaskEvolution:
             avg_fitness = self.pops[pop_name].get_average_fitness()
             _pop = self.pops[pop_name][:]
             for i in range(len(self.pops[pop_name])):
-                idv, flag = self.perform_translate(pop_name)
+                idv, flag = self.perform_translate(pop_name, len(self.pops[pop_name]))
                 if not flag:
                     if self.no_mutation:
                         idv = Individual(pop_name)
@@ -141,8 +141,8 @@ class MultiTaskEvolution:
 
         self.logger.log_count(self.count_by_task, gen_id)
 
-    def perform_translate(self, pop_name):
-        idv = self.translate(pop_name)
+    def perform_translate(self, pop_name, length):
+        idv = self.translate(pop_name, length)
 
         count = REGENERATE_COUNT
         while idv.injection in self.visited and count:
@@ -179,11 +179,11 @@ class MultiTaskEvolution:
         self.visited.add(idv.injection)
         return idv, False
 
-    def translate(self, pop_name):
+    def translate(self, pop_name, length):
         _other_tasks_ = self.tasks[:]
         _other_tasks_.remove(pop_name)
         select_task_name = random.choice(_other_tasks_)
-        idx = random.randint(0, 99)
+        idx = random.randint(0, length - 1)
         # translate
         translator_name = '{}2{}'.format(select_task_name, pop_name)
         idv = Individual(pop_name)
