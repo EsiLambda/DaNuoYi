@@ -5,9 +5,18 @@
 # github: https://github.com/yangheng95
 # Copyright (C) 2021. All Rights Reserved.
 
+# -*- coding: utf-8 -*-
+# file: bypass.py
+# time: 2021/7/29
+# author: yangheng <yangheng@m.scnu.edu.cn>
+# github: https://github.com/yangheng95
+# Copyright (C) 2021. All Rights Reserved.
+
 import random
 
 import requests
+
+import libinjection
 
 from DaNuoYi.evolution.entity.individual import Individual
 from DaNuoYi.global_config import NGX_LUA_WAF, MODSECURITY_WAF, TIMEOUT
@@ -31,31 +40,40 @@ def is_bypass(individual: Individual, waf_address, return_code=False):
 
         payload = construct_user_input(individual)
 
+        
+
         if '5000' in waf_address:
+            waf_address = "http://www.itsecgames.com/"
             if task == 'sqli':
-                url_get = waf_address + r'sqli_6.php'
-                params = {"title": payload, "action": "search"}
-                response = session.get(url=url_get, params=params, timeout=TIMEOUT)
+                response = libinjection.is_sql_injection(f"http://testphp.vulnweb.com/main.php?SmallClass={payload}")
+                if response['is_sqli'] == True:
+                    return (True, 200) if return_code else True
+                return (False, 404) if return_code else False
             elif task == 'xss':
-                url_get = waf_address + r'xss_post.php'
-                params = {"firstname": payload, "lastname": payload, "form": "submit"}
-                response = session.get(url=url_get, params=params)
+                response = libinjection.is_xss(f"http://testphp.vulnweb.com/index.php?name={payload}")
+                if response['is_xss'] == True:
+                    return (True, 200) if return_code else True
+                return (False, 404) if return_code else False
             elif task == 'phpi':
-                url_get = waf_address + r'phpi.php?'
-                params = {"message": payload}
-                response = session.get(url=url_get, params=params)
+                response = libinjection.is_sql_injection(f"http://testphp.vulnweb.com/main.php?SmallClass={payload}")
+                if response['is_sqli'] == True:
+                    return (True, 200) if return_code else True
+                return (False, 404) if return_code else False
             elif task == 'osi':
-                url_get = waf_address + r'commandi.php?'
-                params = {"target": payload, "form": "submit"}
-                response = session.get(url=url_get, params=params)
+                response = libinjection.is_sql_injection(f"http://testphp.vulnweb.com/main.php?SmallClass={payload}")
+                if response['is_sqli'] == True:
+                    return (True, 200) if return_code else True
+                return (False, 404) if return_code else False
             elif task == 'xmli':
-                url_get = waf_address + r'xmli_2.php?'
-                params = {"genre": payload, "action": "search"}
-                response = session.get(url=url_get, params=params)
+                response = libinjection.is_sql_injection(f"http://testphp.vulnweb.com/main.php?SmallClass={payload}")
+                if response['is_sqli'] == True:
+                    return (True, 200) if return_code else True
+                return (False, 404) if return_code else False
             elif task == 'htmli':
-                url_get = waf_address + r'htmli_get.php?'
-                params = {"firstname": payload, "lastname": payload, "form": "submit"}
-                response = session.get(url=url_get, params=params)
+                response = libinjection.is_sql_injection(f"http://testphp.vulnweb.com/main.php?SmallClass={payload}")
+                if response['is_sqli'] == True:
+                    return (True, 200) if return_code else True
+                return (False, 404) if return_code else False
             else:
                 raise KeyError('Unknown injection type!')
         elif '8888' in waf_address:
@@ -73,10 +91,10 @@ def is_bypass(individual: Individual, waf_address, return_code=False):
         else:
             raise KeyError('Unrecognized WAF address: {}!'.format(waf_address))
 
-        if response.status_code == 200:
-            return (True, response.status_code) if return_code else True
-
-        return (False, response.status_code) if return_code else False
+        # if response['is_sql'] == True:
+        #     return (True, 200) if return_code else True
+        # return (False, 404) if return_code else False
 
     except Exception as e:
         return is_bypass(individual, waf_address, return_code)
+
