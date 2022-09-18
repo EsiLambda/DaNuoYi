@@ -34,20 +34,20 @@ def start_evolve(tasks: list, args, logger, rnd_select, no_mutation):
 
     logger.log_injections(engine.bypass_injection_by_task)
 
-    for task in tasks:
-        bypass_case_per_generation_by_task = np.array(bypass_case_per_generation[task])
-        x = bypass_case_per_generation_by_task[:, 0]
-        y = bypass_case_per_generation_by_task[:, 1]
-        plt.plot(x, y, color='r', marker='o', linestyle='dashed')
-        plt.xlabel('Generation')
-        plt.ylabel('Bypass Cases')
-        if rnd_select:
-            plt.title('(Rand) injection:{} Classifier:{} WAF:{} \nTasks:{}'.format(task, args.classifier, args.waf, tasks))
-        else:
-            plt.title('Injection:{} Classifier:{} WAF:{} \nTasks:{}'.format(task, args.classifier, args.waf, tasks))
-        plt.savefig(logger.output_figure_paths[logger.task_to_index[task]])
-        plt.show()
-        plt.close()
+#     for task in tasks:
+#         bypass_case_per_generation_by_task = np.array(bypass_case_per_generation[task])
+#         x = bypass_case_per_generation_by_task[:, 0]
+#         y = bypass_case_per_generation_by_task[:, 1]
+#         plt.plot(x, y, color='r', marker='o', linestyle='dashed')
+#         plt.xlabel('Generation')
+#         plt.ylabel('Bypass Cases')
+#         if rnd_select:
+#             plt.title('(Rand) injection:{} Classifier:{} WAF:{} \nTasks:{}'.format(task, args.classifier, args.waf, tasks))
+#         else:
+#             plt.title('Injection:{} Classifier:{} WAF:{} \nTasks:{}'.format(task, args.classifier, args.waf, tasks))
+#         plt.savefig(logger.output_figure_paths[logger.task_to_index[task]])
+#         plt.show()
+#         plt.close()
 
 
 def quick_run(tasks=None, classifier_name='lstm', waf='mod_security', seed=None, rnd_select=False, no_mutation=False):
