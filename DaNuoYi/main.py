@@ -62,14 +62,14 @@ def quick_run(tasks=None, classifier_name='lstm', waf='mod_security', seed=None,
     :return:
     """
     if tasks is None:
-        tasks = ["sqli", "xss", "osi", "phpi", "xmli", "htmli"]
+        tasks = ["sqli", "xss"]
 
     arguments = ArgumentParser()
     arguments.add_argument("--tasks", default=tasks, type=list, help="injection tasks")
     arguments.add_argument("--waf", default=waf, choices=['mod_security', 'openresty'])
     arguments.add_argument("--classifier", default=classifier_name, choices=['lstm', 'rnn', 'gru'], help="Type of classifier to load")
-    arguments.add_argument("--evolve_round", default=2, help="Maximum number of fuzzing rounds")
-    arguments.add_argument("--pop_size", default=10, help="Fuzzing step size for each round (parallel fuzzing steps)")
+    arguments.add_argument("--evolve_round", default=20, help="Maximum number of fuzzing rounds")
+    arguments.add_argument("--pop_size", default=100, help="Fuzzing step size for each round (parallel fuzzing steps)")
     arguments = arguments.parse_args()
 
     logger = Logger(arguments.tasks, arguments.classifier)
