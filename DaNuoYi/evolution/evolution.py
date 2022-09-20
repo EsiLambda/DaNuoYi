@@ -114,23 +114,31 @@ class MultiTaskEvolution:
         self.visited = set()
 
     def evolve(self, gen_id):
-
+        
+        src_dest_dict = {}
         for pop_name in self.pops:
+            src_dest_dict[pop_name] = {}
             avg_fitness = self.pops[pop_name].get_average_fitness()
             _pop = self.pops[pop_name][:]
             for i in range(len(self.pops[pop_name])):
-                idv, flag = self.perform_translate(pop_name, len(self.pops[pop_name]))
+                idv, flag, src_payload = self.perform_translate(pop_name, len(self.pops[pop_name]))
                 if not flag:
                     if self.no_mutation:
                         idv = Individual(pop_name)
+                        src_payload = None
                     else:
                         idv, flag = self.perform_mutate(i, pop_name)
+                        src_payload = None
 
                 if not self.rnd_select:
                     if idv.fitness > avg_fitness:
                         _pop.append(idv)
                     else:
                         _pop.append(Individual(idv.task))
+                        src_payload = None
+                        
+                if src_payload is not None:
+                    src_dest_dict[pop_name][f'{idv}'] = src_payload
 
             if not self.rnd_select:
                 self.fitness_assigners[pop_name].assign_fitness(_pop)
@@ -140,9 +148,10 @@ class MultiTaskEvolution:
             self.pops[pop_name].individuals = _pop[:len(self.pops[pop_name])]
 
         self.logger.log_count(self.count_by_task, gen_id)
+        self.logger.write_dict_to_file(src_dest_dict)
 
     def perform_translate(self, pop_name, length):
-        idv = self.translate(pop_name, length)
+        idv, src_payload = self.translate(pop_name)
 
         count = REGENERATE_COUNT
         while idv.injection in self.visited and count:
@@ -154,11 +163,11 @@ class MultiTaskEvolution:
             self.bypass_injection_by_task[pop_name].add(idv.injection)
             self.fitness_assigners[pop_name].assign_fitness(idv)
             self.visited.add(idv.injection)
-            return idv, True
+            return idv, True, src_payload
 
         self.fitness_assigners[pop_name].assign_fitness(idv)
         self.visited.add(idv.injection)
-        return idv, False
+        return idv, True, src_payload
 
     def perform_mutate(self, idx, pop_name):
         idv = self.pops[pop_name][idx].mutate()
@@ -184,8 +193,9 @@ class MultiTaskEvolution:
         _other_tasks_.remove(pop_name)
         select_task_name = random.choice(_other_tasks_)
         idx = random.randint(0, length - 1)
+        src_payload = self.pops[select_task_name][idx].injection
         # translate
         translator_name = '{}2{}'.format(select_task_name, pop_name)
         idv = Individual(pop_name)
-        idv.injection = self.translators[translator_name].translate(self.pops[select_task_name][idx].injection)
-        return idv
+        idv.injection = self.translators[translator_name].translate(src_payload)
+        return idv, src_payload
