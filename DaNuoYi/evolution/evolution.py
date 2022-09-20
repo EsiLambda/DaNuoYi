@@ -138,7 +138,7 @@ class MultiTaskEvolution:
                         src_payload = None
                         
                 if src_payload is not None:
-                    src_dest_dict[pop_name][f'{idv}'] = src_payload
+                    src_dest_dict[pop_name][f'{idv.injection}'] = src_payload
 
             if not self.rnd_select:
                 self.fitness_assigners[pop_name].assign_fitness(_pop)
