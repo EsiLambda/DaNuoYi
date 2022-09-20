@@ -88,3 +88,7 @@ class Logger:
     def log_count(self, count_map, gen_id):
         for task in self.tasks:
             self.count_loggers[self.task_to_index[task]].info('{}: {}'.format(gen_id, count_map[task]))
+           
+    def write_dict_to_file(self, dict):
+        with open('drive/MyDrive/DaNuoYi Project/src_dest_dict.txt', 'w') as f:
+            f.write(str(dict))
