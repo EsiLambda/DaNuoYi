@@ -151,7 +151,7 @@ class MultiTaskEvolution:
         self.logger.write_dict_to_file(src_dest_dict)
 
     def perform_translate(self, pop_name, length):
-        idv, src_payload = self.translate(pop_name)
+        idv, src_payload = self.translate(pop_name, length)
 
         count = REGENERATE_COUNT
         while idv.injection in self.visited and count:
