@@ -90,5 +90,5 @@ class Logger:
             self.count_loggers[self.task_to_index[task]].info('{}: {}'.format(gen_id, count_map[task]))
            
     def write_dict_to_file(self, dict):
-        with open('drive/MyDrive/DaNuoYi Project/src_dest_dict.txt', 'w') as f:
+        with open(f'{OUTPUT_PATH}/src_dest_dict.txt', 'w') as f:
             f.write(str(dict))
