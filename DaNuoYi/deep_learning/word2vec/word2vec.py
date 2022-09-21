@@ -17,14 +17,18 @@ import DaNuoYi.global_config
 
 def train_word2vec(workers=1):
     '''
-    LineSentence(inp)：格式简单：一句话=一行; 单词已经过预处理并被空格分隔。
-    size：是每个词的向量维度；
-    window：是词向量训练时的上下文扫描窗口大小，窗口为5就是考虑前5个词和后5个词；
-    min-count：设置最低频率，默认是5，如果一个词语在文档中出现的次数小于5，那么就会丢弃；
-    workers：是训练的进程数（需要更精准的解释，请指正），默认是当前运行机器的处理器核数。这些参数先记住就可以了。
-    sg ({0, 1}, optional) – 模型的训练算法: 1: skip-gram; 0: CBOW
-    alpha (float, optional) – 初始学习率
-    iter (int, optional) – 迭代次数，默认为5
+    LineSentence(inp)：The format is simple: one sentence = one line; words are preprocessed and separated by spaces.
+    size：is the vector dimension of each word;
+    window：is the size of the context scan window during word vector training,
+            and the window is 5 to consider the first 5 words and the last 5 words;
+    min-count：Set the minimum frequency, the default is 5, if a word appears in the document less than 5 times,
+               it will be discarded;
+    workers：is the number of training processes (a more precise explanation is needed, please correct me),
+             the default is the number of processor cores of the currently running machine.
+             Just remember these parameters first.
+    sg ({0, 1}, optional) – Model training algorithm: 1: skip-gram; 0: CBOW
+    alpha (float, optional) – initial learning rate
+    iter (int, optional) – The number of iterations, the default is 5
     '''
     in_corpus_path = find_files('injection_cases', key='.txt', recursive=True)
     while len(in_corpus_path) < 18:
