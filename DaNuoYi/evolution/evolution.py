@@ -216,8 +216,9 @@ class MultiTaskEvolution:
         translator_name = '{}2{}'.format(pop_name, select_task_name)
         payload_translated = self.translators[translator_name].translate(payload)
         mutated_translated = self.translators[translator_name].translate(mutated)
-
-        src_mut_dict['src'][f'{payload}'] = mutated
-        src_mut_dict['trans'][f'{payload_translated}'] = mutated_translated
+        
+        if payload not in src_mut_dict['src'].keys() and payload_translated not in src_mut_dict['trans'].keys():
+            src_mut_dict['src'][f'{payload}'] = mutated
+            src_mut_dict['trans'][f'{payload_translated}'] = mutated_translated
 
         return src_mut_dict
