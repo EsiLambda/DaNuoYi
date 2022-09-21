@@ -117,7 +117,7 @@ class MultiTaskEvolution:
         
         src_mut_dict = {}
         src_mut_dict['src'] = {}
-        src_mut_dict['mut'] = {}
+        src_mut_dict['trans'] = {}
         src_dest_dict = {}
         for pop_name in self.pops:
             src_dest_dict[pop_name] = {}
@@ -217,7 +217,7 @@ class MultiTaskEvolution:
         payload_translated = self.translators[translator_name].translate(payload)
         mutated_translated = self.translators[translator_name].translate(mutated)
 
-        src_mut_dict['src'][f'{payload}'] = payload_translated
-        src_mut_dict['mut'][f'{payload}'] = mutated_translated
+        src_mut_dict['src'][f'{payload}'] = mutated
+        src_mut_dict['trans'][f'{payload_translated}'] = mutated_translated
 
         return src_mut_dict
