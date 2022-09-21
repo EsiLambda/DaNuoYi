@@ -115,12 +115,16 @@ class MultiTaskEvolution:
 
     def evolve(self, gen_id):
         
+        src_mut_dict = {}
         src_dest_dict = {}
         for pop_name in self.pops:
             src_dest_dict[pop_name] = {}
             avg_fitness = self.pops[pop_name].get_average_fitness()
             _pop = self.pops[pop_name][:]
             for i in range(len(self.pops[pop_name])):
+                payload = self.pops[pop_name][i]
+                mutated = self.perform_mutate(i, pop_name)
+                src_mut_dict = self.src_mut_translation(payload, mutated, pop_name, src_mut_dict)
                 idv, flag, src_payload = self.perform_translate(pop_name, len(self.pops[pop_name]))
                 if not flag:
                     if self.no_mutation:
@@ -149,6 +153,7 @@ class MultiTaskEvolution:
 
         self.logger.log_count(self.count_by_task, gen_id)
         self.logger.write_dict_to_file(src_dest_dict)
+        self.logger.write_dict_to_file(src_mut_dict)
 
     def perform_translate(self, pop_name, length):
         idv, src_payload = self.translate(pop_name, length)
@@ -199,3 +204,17 @@ class MultiTaskEvolution:
         idv = Individual(pop_name)
         idv.injection = self.translators[translator_name].translate(src_payload)
         return idv, src_payload
+    
+    def src_mut_translation(self, payload, mutated, pop_name, src_mut_dict):
+        _other_tasks_ = self.tasks[:]
+        _other_tasks_.remove(pop_name)
+        select_task_name = random.choice(_other_tasks_)  # works just for double task
+        # translate
+        translator_name = '{}2{}'.format(pop_name, select_task_name)
+        payload_translated = self.translators[translator_name].translate(payload)
+        mutated_translated = self.translators[translator_name].translate(mutated)
+
+        src_mut_dict['src'][f'{payload}'] = payload_translated
+        src_mut_dict['mut'][f'{payload}'] = mutated_translated
+
+        return src_mut_dict
