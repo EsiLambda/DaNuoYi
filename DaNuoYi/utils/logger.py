@@ -89,6 +89,6 @@ class Logger:
         for task in self.tasks:
             self.count_loggers[self.task_to_index[task]].info('{}: {}'.format(gen_id, count_map[task]))
            
-    def write_dict_to_file(self, dict):
-        with open(f'{OUTPUT_PATH}/src_dest_dict.txt', 'w') as f:
+    def write_dict_to_file(self, dict, name):
+        with open(f'{OUTPUT_PATH}/{name}.txt', 'w') as f:
             f.write(str(dict))
