@@ -152,8 +152,8 @@ class MultiTaskEvolution:
             self.pops[pop_name].individuals = _pop[:len(self.pops[pop_name])]
 
         self.logger.log_count(self.count_by_task, gen_id)
-        self.logger.write_dict_to_file(src_dest_dict)
-        self.logger.write_dict_to_file(src_mut_dict)
+        self.logger.write_dict_to_file(src_dest_dict, 'src_dest_dict')
+        self.logger.write_dict_to_file(src_mut_dict, 'src_mut_dict')
 
     def perform_translate(self, pop_name, length):
         idv, src_payload = self.translate(pop_name, length)
