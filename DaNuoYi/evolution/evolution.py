@@ -116,6 +116,8 @@ class MultiTaskEvolution:
     def evolve(self, gen_id):
         
         src_mut_dict = {}
+        src_mut_dict['src'] = {}
+        src_mut_dict['mut'] = {}
         src_dest_dict = {}
         for pop_name in self.pops:
             src_dest_dict[pop_name] = {}
