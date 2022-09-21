@@ -123,8 +123,8 @@ class MultiTaskEvolution:
             _pop = self.pops[pop_name][:]
             for i in range(len(self.pops[pop_name])):
                 payload = self.pops[pop_name][i].injection
-                mutated = self.perform_mutate(i, pop_name)
-                mutated = mutated.injection
+                mutated_idv, mutated_flag = self.perform_mutate(i, pop_name)
+                mutated = mutated_idv.injection
                 src_mut_dict = self.src_mut_translation(payload, mutated, pop_name, src_mut_dict)
                 idv, flag, src_payload = self.perform_translate(pop_name, len(self.pops[pop_name]))
                 if not flag:
