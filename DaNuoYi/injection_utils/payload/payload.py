@@ -58,6 +58,17 @@ class Payload(object):
         self.ctx = children['ctx']
         self.length += 1
         return children['ctx']
+    
+        def generate_regex(self, tag, dictionary):
+        if isinstance(tag, str):
+            if tag in dictionary.keys():
+                return self.generate_regex(dictionary[tag], dictionary)
+            else:
+                return tag
+        for i in range(len(tag)):
+            tag[i] = self.generate_regex(tag[i], dictionary)
+            
+        return tag
 
     def traversal(self, ctx):
         res = list()
